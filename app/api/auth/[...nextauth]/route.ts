@@ -13,7 +13,7 @@ declare module "next-auth" {
   }
 }
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
@@ -21,6 +21,20 @@ const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/auth/login",
+  },
+  callbacks: {
+    jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = user?.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id = token.id as string;
+
+      return session;
+    },
   },
   providers: [
     GoogleProvider({
@@ -32,6 +46,7 @@ const authOptions: NextAuthOptions = {
         email: { label: "email", type: "email" },
         password: { label: "password", type: "password" },
       },
+
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
           throw new Error("Invalid e-mail or password!");
@@ -43,6 +58,10 @@ const authOptions: NextAuthOptions = {
           },
         });
 
+        if (credentials.password != user?.password) {
+          throw new Error("Invalid e-mail or password!");
+        }
+
         if (!user) {
           throw new Error("User not found!");
         } else {
@@ -53,10 +72,8 @@ const authOptions: NextAuthOptions = {
   ],
 };
 
-export const getServerAuthSession = () => {
-  return getServerSession(authOptions);
-};
-
 const handler = NextAuth(authOptions);
+
+
 
 export { handler as GET, handler as POST };
