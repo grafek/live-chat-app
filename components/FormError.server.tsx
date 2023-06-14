@@ -1,10 +1,10 @@
 import { type FieldError } from "react-hook-form";
-type FormErrorProps = {
+type IProps = {
   fieldErrors?: FieldError;
   errors?: string;
 };
 
-const FormError: React.FC<FormErrorProps> = ({ fieldErrors, errors }) => {
+const FormError: React.FC<IProps> = ({ fieldErrors, errors }) => {
   return fieldErrors || errors ? (
     <span
       role={"alert"}

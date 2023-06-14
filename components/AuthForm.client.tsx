@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Spinner } from "./Loaders.server";
 
-interface IAuthFormProps {
+interface IProps {
   formAction: "Login" | "Register";
   providers:
     | Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>
@@ -34,7 +34,7 @@ const authFormDefaultValues: IAuthFormValues = {
   password: "",
 };
 
-const AuthForm: React.FC<IAuthFormProps> = ({ formAction, providers }) => {
+const AuthForm: React.FC<IProps> = ({ formAction, providers }) => {
   const {
     register,
     handleSubmit,
@@ -57,7 +57,10 @@ const AuthForm: React.FC<IAuthFormProps> = ({ formAction, providers }) => {
         if (!res.ok) {
           throw new Error(res.statusText);
         } else {
-          router.push("/auth/login");
+          await signIn("credentials", {
+            ...formData,
+          });
+          router.push("/chats");
         }
       } catch (e) {
         if (e instanceof Error) {
@@ -70,7 +73,6 @@ const AuthForm: React.FC<IAuthFormProps> = ({ formAction, providers }) => {
       try {
         const res = await signIn("credentials", {
           ...formData,
-          callbackUrl: "/",
           redirect: false,
         });
         if (res?.error) {
@@ -106,7 +108,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({ formAction, providers }) => {
               register={register}
               validation={{
                 pattern: {
-                  value: /^[A-Za-z]+$/i,
+                  value: /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/i,
                   message: "Not a valid name!",
                 },
                 maxLength: { value: 20, message: "Please choose shorter name" },
