@@ -2,7 +2,7 @@ import AuthForm from "@/components/AuthForm.client";
 import { getProviders } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { type Metadata } from "next";
-import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/route";
+import getServerAuthSession from "@/lib/getServerAuthSession";
 
 export const metadata: Metadata = {
   title: "Register",
