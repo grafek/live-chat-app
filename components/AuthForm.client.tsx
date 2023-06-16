@@ -160,7 +160,7 @@ const AuthForm: React.FC<IProps> = ({ formAction, providers }) => {
           title={formAction}
           type="submit"
           disabled={isSubmitting}
-          className="mt-2 flex w-full items-center justify-center rounded-md bg-[#1877f2] py-2 text-lg text-white hover:bg-[#166ad8]"
+          className="mt-2 flex w-full items-center justify-center rounded-md bg-violet-500 py-2 text-lg text-white hover:bg-violet-600"
         >
           {isSubmitting ? <Spinner /> : formAction}
         </Button>
@@ -202,7 +202,7 @@ const AuthForm: React.FC<IProps> = ({ formAction, providers }) => {
           ))}
         <Link
           href={`/auth/${formAction === "Register" ? "login" : "register"}`}
-          className="flex-1 text-center text-[#1877f2] hover:underline"
+          className="flex-1 text-center text-violet-700 hover:underline"
         >
           {`${formAction === "Register" ? "Login" : "Register"}`}
         </Link>

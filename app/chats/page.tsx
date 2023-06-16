@@ -1,7 +1,3 @@
-const ChatsPage = () => {
-  return (
-    <div>ChatsPage</div>
-  )
-}
+const ChatsPage = () => {};
 
-export default ChatsPage
+export default ChatsPage;
