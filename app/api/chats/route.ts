@@ -6,26 +6,28 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getServerAuthSession();
 
-    console.log(session);
-
     if (!session)
       return new NextResponse("Unauthorized", {
         status: 401,
       });
 
     const body = await req.json();
-    const { id: userId, name, image } = body;
+    const { id: userId } = body;
 
     const existingChat = await prisma.chat.findFirst({
       where: {
-        userIds: {
-          equals: [session.user.id, userId],
-        },
-        OR: {
-          userIds: {
-            equals: [userId, session.user.id],
+        OR: [
+          {
+            userIds: {
+              equals: [userId, session.user.id],
+            },
           },
-        },
+          {
+            userIds: {
+              equals: [session.user.id, userId],
+            },
+          },
+        ],
       },
     });
 
@@ -35,8 +37,6 @@ export async function POST(req: NextRequest) {
 
     const newChat = await prisma.chat.create({
       data: {
-        name,
-        image,
         users: {
           connect: [
             {
