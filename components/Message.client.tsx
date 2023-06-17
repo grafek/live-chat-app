@@ -8,11 +8,7 @@ interface IProps {
   message: string;
   otherUser: User | undefined;
 }
-const Message: React.FC<IProps> = ({
-  isMyMessage,
-  message = "Message",
-  otherUser,
-}) => {
+const Message: React.FC<IProps> = ({ isMyMessage, message, otherUser }) => {
   return (
     <div className={`${isMyMessage ? "ml-auto" : ""} flex items-center gap-1`}>
       {otherUser && !isMyMessage ? (
@@ -27,7 +23,7 @@ const Message: React.FC<IProps> = ({
       <span
         className={`${
           isMyMessage ? "bg-violet-600 text-white" : "bg-gray-200"
-        }  inline-block rounded-full  px-3 py-2`}
+        } inline-block max-w-[360px] break-words rounded-3xl px-3 py-2 md:max-w-sm lg:max-w-xl`}
       >
         {message}
       </span>

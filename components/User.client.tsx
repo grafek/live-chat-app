@@ -14,15 +14,13 @@ const User: React.FC<IProps> = ({ name, image, id }) => {
   const router = useRouter();
 
   const createConversation = async () => {
-    const res = await fetch("http://localhost:3000/api/chats", {
+    const res = await fetch("/api/chats", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id, image, name }),
     });
-
-    
 
     const chat = await res.json();
 
@@ -31,7 +29,7 @@ const User: React.FC<IProps> = ({ name, image, id }) => {
 
   return (
     <button
-      onClick={async () => await createConversation()}
+      onClick={createConversation}
       title={`Start conversation with ${name}`}
       className="flex w-full items-center justify-center gap-2 rounded-md px-1 py-2 transition-colors hover:bg-gray-100 md:justify-start"
     >

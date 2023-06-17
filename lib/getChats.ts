@@ -2,15 +2,14 @@ import getServerAuthSession from "./getServerAuthSession";
 import { prisma } from "./prisma";
 
 const getChats = async () => {
-  const session = await getServerAuthSession();
-  if (!session) {
-    throw new Error("Unauthorized!");
-  }
-
   try {
+    const session = await getServerAuthSession();
+    if (!session) {
+      throw new Error("Unauthorized!");
+    }
     const chats = await prisma.chat.findMany({
       orderBy: {
-        lastMessageAt: 'desc',
+        lastMessageAt: "desc",
       },
       where: {
         userIds: {
@@ -25,7 +24,7 @@ const getChats = async () => {
 
     return chats;
   } catch (e) {
-    return []
+    return [];
   }
 };
 
