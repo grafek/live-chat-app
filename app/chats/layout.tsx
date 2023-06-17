@@ -20,9 +20,16 @@ const ChatsLayout: React.FC<IProps> = async ({ children }) => {
           <ul className="mt-4 h-[calc(100%-118px)] overflow-y-auto overflow-x-clip md:h-[calc(100%-150px)]">
             {chats.map(async (chatItem) => {
               const otherUser = await getOtherUser(chatItem);
+
               return (
                 <li key={chatItem.id} className="py-1">
-                  <ChatItem chat={chatItem} otherUser={otherUser} />
+                  <ChatItem
+                    chat={chatItem}
+                    otherUser={otherUser}
+                    isLastMessageMine={
+                      chatItem?.messages.at(-1)?.senderId === session?.user.id
+                    }
+                  />
                 </li>
               );
             })}

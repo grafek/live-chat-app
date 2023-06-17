@@ -6,12 +6,14 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getServerAuthSession();
 
-    if (!session)
+    if (!session) {
       return new NextResponse("Unauthorized", {
         status: 401,
       });
+    }
 
     const body = await req.json();
+
     const { id: userId } = body;
 
     const existingChat = await prisma.chat.findFirst({
@@ -53,7 +55,7 @@ export async function POST(req: NextRequest) {
       },
     });
     return NextResponse.json(newChat);
-  } catch (error) {
+  } catch (_) {
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

@@ -11,15 +11,16 @@ type Props = {
     messages: Message[];
   };
   otherUser: User | undefined;
+  isLastMessageMine: boolean;
 };
 
-const ChatItem: React.FC<Props> = ({ chat, otherUser }) => {
+const ChatItem: React.FC<Props> = ({ chat, otherUser, isLastMessageMine }) => {
   const isChatOpen = useActiveRoute(chat.id);
 
   return (
     <Link
       href={`/chats/${chat.id}`}
-      className={`flex w-full justify-center gap-2 rounded-md px-1 py-2 transition-colors hover:bg-gray-200 md:justify-start items-center ${
+      className={`flex w-full items-center justify-center gap-2 rounded-md px-1 py-2 transition-colors hover:bg-gray-200 md:justify-start ${
         isChatOpen ? "bg-gray-100" : ""
       }`}
     >
@@ -33,16 +34,17 @@ const ChatItem: React.FC<Props> = ({ chat, otherUser }) => {
       <div className="hidden md:flex md:flex-col md:items-start">
         <span>{otherUser?.name}</span>
 
-        <div className="text-[0.9rem] text-[#777]">
+        <div className="flex w-full items-center gap-1 text-[0.9rem] text-[#777]">
           {chat.messages.length > 0 ? (
             <>
-              <span className="max-w-[175px]">
+              <span className="block max-w-[45%] truncate">
+                {isLastMessageMine ? "You: " : ""}{" "}
                 {chat.messages.at(-1)?.content}
               </span>
               <span> · </span>
               <span>
                 {getTimeAgo(Date.parse(chat.lastMessageAt.toISOString()))}
-              </span>{" "}
+              </span>
             </>
           ) : (
             "Started a conversation"
