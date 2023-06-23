@@ -48,6 +48,8 @@ const AuthForm: React.FC<IProps> = ({ formAction, providers }) => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<IAuthFormValues> = async (formData) => {
+    setError("");
+    
     if (formAction === "Register") {
       try {
         const res = await fetch("/api/auth/register", {

@@ -14,7 +14,13 @@ const ChatPage: React.FC<IProps> = async ({ params }) => {
   const otherUser = await getOtherUser(chat);
   const messages = await getMessages(params.chatId);
 
-  return <ChatBox otherUser={otherUser} chatId={params.chatId} messages={messages}/>;
+  return (
+    <ChatBox
+      otherUser={otherUser}
+      chatId={params.chatId}
+      initialMessages={messages}
+    />
+  );
 };
 
 export default ChatPage;

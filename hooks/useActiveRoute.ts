@@ -10,7 +10,7 @@ const useActiveRoute = (pathname:string) => {
 
   useMemo(
     () =>
-      currentPathname.startsWith(pathname) || currentPathname.includes(pathname)
+      currentPathname?.startsWith(pathname) || currentPathname?.includes(pathname)
         ? setIsActive(true)
         : setIsActive(false),
     [currentPathname, pathname]
