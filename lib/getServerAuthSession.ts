@@ -5,4 +5,4 @@ const getServerAuthSession = () => {
   return getServerSession(authOptions);
 };
 
-export default getServerAuthSession
+export default getServerAuthSession;

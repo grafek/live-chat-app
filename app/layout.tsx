@@ -1,3 +1,6 @@
+'use client'
+
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
 export const metadata = {
@@ -12,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="overflow-y-clip">{children}</body>
+      <SessionProvider>
+        <body className="overflow-y-clip">{children}</body>
+      </SessionProvider>
     </html>
   );
 }

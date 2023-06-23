@@ -1,5 +1,6 @@
 import getServerAuthSession from "@/lib/getServerAuthSession";
 import { prisma } from "@/lib/prisma";
+import { pusherServer } from "@/lib/pusher";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -35,22 +36,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const updatedChat = await prisma.chat.update({
-      where: {
-        id: chatId,
-      },
-      data: {
-        lastMessageAt: new Date(),
-        messages: {
-          connect: {
-            id: newMessage.id,
-          },
-        },
-      },
-      include: {
-        users: true,
-      },
-    });
+    await pusherServer.trigger(chatId, "messages-new", newMessage);
 
     return NextResponse.json(newMessage);
   } catch (e) {

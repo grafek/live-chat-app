@@ -32,7 +32,7 @@ const ChatItem: React.FC<Props> = ({ chat, otherUser, isLastMessageMine }) => {
         className="rounded-full object-cover"
       />
       <div className="hidden md:flex md:flex-col md:items-start">
-        <span>{otherUser?.name}</span>
+        <span className="font-semibold">{otherUser?.name}</span>
 
         <div className="flex w-full items-center gap-1 text-[0.9rem] text-[#777]">
           {chat.messages.length > 0 ? (

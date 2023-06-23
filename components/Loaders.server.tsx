@@ -12,3 +12,25 @@ export const Spinner = () => {
     </div>
   );
 };
+
+export const ListSkeleton = () => {
+  return (
+    <div role="status">
+      {Array(6)
+        .fill("")
+        .map((_, i) => (
+          <div
+            key={i}
+            className="first:mt-4 flex animate-pulse items-center justify-center p-2 md:justify-normal md:space-x-4"
+          >
+            <div className="h-12 w-12 flex-shrink-0 rounded-full bg-gray-300"></div>
+            <div className="hidden flex-1 space-y-2 py-1 md:block">
+              <div className="h-4 w-3/4 rounded bg-gray-300"></div>
+              <div className="h-3 w-1/2 rounded bg-gray-300"></div>
+            </div>
+          </div>
+        ))}
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
+};
