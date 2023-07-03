@@ -24,7 +24,7 @@ const ChatsLayout: React.FC<IProps> = async ({ children }) => {
               return (
                 <li key={chatItem.id} className="py-1">
                   <ChatItem
-                    chat={chatItem}
+                    initialChat={chatItem}
                     otherUser={otherUser}
                     isLastMessageMine={
                       chatItem?.messages.at(-1)?.senderId === session?.user.id
