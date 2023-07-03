@@ -36,10 +36,31 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    const updatedChat = await prisma.chat.update({
+      where: {
+        id: chatId,
+      },
+      data: {
+        lastMessageAt: new Date(),
+        messages: {
+          connect: {
+            id: newMessage.id,
+          },
+        },
+      },
+      include: {
+        messages: true,
+        users: true,
+      },
+    });
     await pusherServer.trigger(chatId, "messages-new", newMessage);
 
+    const lastMessage = updatedChat.messages.at(-1);
+
+    await pusherServer.trigger(chatId, "chat-update", { lastMessage, chatId });
     return NextResponse.json(newMessage);
   } catch (e) {
-    return new NextResponse("Internal Server Error", { status: 500 });
+    // return new NextResponse("Internal Server Error", { status: 500 });
+    // return new NextResponse(e.message, { status: 500 });
   }
 }

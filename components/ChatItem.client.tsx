@@ -2,20 +2,49 @@
 
 import useActiveRoute from "@/hooks/useActiveRoute";
 import getTimeAgo from "@/lib/getTimeAgo";
+import { pusherClient } from "@/lib/pusher";
 import type { Chat, Message, User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 type Props = {
-  chat: Chat & {
+  initialChat: Chat & {
     messages: Message[];
   };
   otherUser: User | undefined;
   isLastMessageMine: boolean;
 };
 
-const ChatItem: React.FC<Props> = ({ chat, otherUser, isLastMessageMine }) => {
+const ChatItem: React.FC<Props> = ({
+  initialChat,
+  otherUser,
+  isLastMessageMine,
+}) => {
+  const [chat, setChat] = useState(initialChat);
   const isChatOpen = useActiveRoute(chat.id);
+
+  useEffect(() => {
+    pusherClient.subscribe(chat.id);
+
+    pusherClient.bind(
+      "chat-update",
+      ({ lastMessage, chatId }: { lastMessage: Message; chatId: string }) => {
+        if (chatId === chat.id) {
+          setChat((prev) => ({
+            ...prev,
+            messages: [...prev.messages, lastMessage],
+          }));
+        }
+        return;
+      }
+    );
+
+    return () => {
+      pusherClient.unsubscribe(chat.id);
+      pusherClient.unbind("chat-update");
+    };
+  }, [chat, chat.id]);
 
   return (
     <Link
