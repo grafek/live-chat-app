@@ -29,11 +29,20 @@ const ChatItem: React.FC<Props> = ({
 
     pusherClient.bind(
       "chat-update",
-      ({ lastMessage, chatId }: { lastMessage: Message; chatId: string }) => {
+      ({
+        lastMessage,
+        chatId,
+        lastMessageAt,
+      }: {
+        lastMessage: Message;
+        chatId: string;
+        lastMessageAt: Date;
+      }) => {
         if (chatId === chat.id) {
           setChat((prev) => ({
             ...prev,
             messages: [...prev.messages, lastMessage],
+            lastMessageAt,
           }));
         }
         return;
@@ -72,7 +81,7 @@ const ChatItem: React.FC<Props> = ({
               </span>
               <span> · </span>
               <span>
-                {getTimeAgo(Date.parse(chat.lastMessageAt.toISOString()))}
+                {getTimeAgo(Date.parse(chat.lastMessageAt.toString()))}
               </span>
             </>
           ) : (

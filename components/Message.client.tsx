@@ -6,7 +6,7 @@ import Image from "next/image";
 interface IProps {
   isMyMessage?: boolean;
   message: string;
-  otherUser: User | undefined;
+  otherUser?: User | undefined;
 }
 const Message: React.FC<IProps> = ({ isMyMessage, message, otherUser }) => {
   return (

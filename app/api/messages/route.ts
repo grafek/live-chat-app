@@ -57,10 +57,14 @@ export async function POST(req: NextRequest) {
 
     const lastMessage = updatedChat.messages.at(-1);
 
-    await pusherServer.trigger(chatId, "chat-update", { lastMessage, chatId });
+    await pusherServer.trigger(chatId, "chat-update", {
+      lastMessage,
+      chatId,
+      lastMessageAt: updatedChat.lastMessageAt,
+    });
+
     return NextResponse.json(newMessage);
   } catch (e) {
-    // return new NextResponse("Internal Server Error", { status: 500 });
-    // return new NextResponse(e.message, { status: 500 });
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
