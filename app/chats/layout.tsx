@@ -1,4 +1,5 @@
 import ChatItem from "@/components/ChatItem.client";
+import MyAIChatItem from "@/components/AIChatItem.client";
 import Sidebar from "@/components/Sidebar.client";
 import getChats from "@/lib/getChats";
 import getOtherUser from "@/lib/getOtherUser";
@@ -18,6 +19,8 @@ const ChatsLayout: React.FC<IProps> = async ({ children }) => {
       <Sidebar session={session}>
         {chats && chats.length > 0 ? (
           <ul className="mt-4 h-[calc(100%-118px)] overflow-y-auto overflow-x-clip md:h-[calc(100%-150px)]">
+            <MyAIChatItem />
+
             {chats.map(async (chatItem) => {
               const otherUser = await getOtherUser(chatItem);
 
