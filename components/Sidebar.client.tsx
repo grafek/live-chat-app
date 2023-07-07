@@ -13,8 +13,8 @@ interface IProps {
 }
 
 const Sidebar: React.FC<IProps> = ({ session, children }) => {
-  const usersRouteActive = useActiveRoute("/users" );
-  const chatsRouteActive = useActiveRoute("/chats" );
+  const usersRouteActive = useActiveRoute("/users");
+  const chatsRouteActive = useActiveRoute("/chats");
 
   return (
     <aside className="relative h-full w-[88px] border-r border-gray-200 px-2 py-2 md:w-[360px]">

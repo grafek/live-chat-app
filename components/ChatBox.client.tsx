@@ -86,7 +86,7 @@ const ChatBox: React.FC<IProps> = ({
   }, [chatId, messages, session?.user.id]);
 
   return (
-    <div className="relative flex min-w-[360px] flex-1 shrink-0 flex-col overflow-x-clip">
+    <div className="relative flex min-w-[353px] flex-1 shrink-0 flex-col overflow-x-clip">
       <div className="flex h-16 w-full items-center gap-2 border-b px-3">
         <Image
           src={otherUser?.image || "/user.png"}
