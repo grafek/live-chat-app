@@ -11,7 +11,7 @@ const UsersLayout: React.FC<IProps> = async ({ children }) => {
   const session = await getServerAuthSession();
   const users = await getUsers();
   return (
-    <div className="flex h-screen w-full">
+    <main className="flex h-screen w-full">
       <Sidebar session={session}>
         <ul className="mt-4 h-[calc(100%-118px)] overflow-y-auto overflow-x-clip md:h-[calc(100%-150px)]">
           {users.map((user, i) => (
@@ -27,7 +27,7 @@ const UsersLayout: React.FC<IProps> = async ({ children }) => {
         </ul>
       </Sidebar>
       {children}
-    </div>
+    </main>
   );
 };
 

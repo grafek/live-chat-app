@@ -18,8 +18,6 @@ export async function POST(req: Request) {
     });
   }
 
-  console.log(messages);
-
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo-0613",
     stream: true,
