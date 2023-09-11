@@ -194,7 +194,7 @@ const AuthForm: React.FC<IProps> = ({ formAction, providers }) => {
               className="flex w-full justify-center gap-2 rounded-md border px-4 py-2 hover:bg-gray-100"
             >
               <Image
-                src={`/${provider.name}.svg`}
+                src={`/${provider.id}.svg`}
                 width={24}
                 height={24}
                 alt={`${provider.id} logo`}
