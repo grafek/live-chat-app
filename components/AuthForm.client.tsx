@@ -197,7 +197,7 @@ const AuthForm: React.FC<IProps> = ({ formAction, providers }) => {
                 src={`/${provider.name}.svg`}
                 width={24}
                 height={24}
-                alt={`${provider.name} logo`}
+                alt={`${provider.id} logo`}
               />
               {provider.name}
             </Button>
